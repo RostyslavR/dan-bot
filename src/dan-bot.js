@@ -30,7 +30,11 @@ bot.hears("about", (ctx) =>
 );
 
 bot.hears("deploy", (ctx) => {
-  shell.exec("/home/reen/soyummy/deploy_soyummy.sh");
+  console.log("1");
+  shell.cd("/home/reen/soyummy");
+  shell.exec("test.sh");
+  // shell.exec("/home/reen/soyummy/deploy_soyummy.sh");
+  console.log("2");
   ctx.reply("Done");
 });
 
