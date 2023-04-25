@@ -3,9 +3,9 @@ const shell = require("shelljs");
 
 const { Telegraf } = require("telegraf");
 
-const { BOT_TOKEN } = process.env;
+const { DAN_BOT_TOKEN } = process.env;
 
-const bot = new Telegraf(BOT_TOKEN);
+const bot = new Telegraf(DAN_BOT_TOKEN);
 
 // bot.start((ctx) => ctx.reply('Welcome'));
 // bot.help((ctx) => ctx.reply('Send me a sticker'));
