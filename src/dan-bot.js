@@ -1,45 +1,74 @@
 require("dotenv").config();
 const shell = require("shelljs");
 
-const { Telegraf } = require("telegraf");
+const TelegramBot = require("node-telegram-bot-api");
 
 const { DAN_BOT_TOKEN } = process.env;
 
-const bot = new Telegraf(DAN_BOT_TOKEN);
+const bot = new TelegramBot(DAN_BOT_TOKEN, { polling: true });
 
-// bot.start((ctx) => ctx.reply('Welcome'));
-// bot.help((ctx) => ctx.reply('Send me a sticker'));
-// bot.on('sticker', (ctx) => ctx.reply('👍'));
-// bot.hears('hi', (ctx) => ctx.reply('Hey there'));
-// bot.launch();
+// **
+bot.setMyCommands([
+  { command: "/deploy", description: "greeting" },
+  // { command: "/about", description: "about me" },
+  // { command: "/task", description: "task for me" },
+]);
 
-bot.start((ctx) =>
-  ctx.reply(
-    `Hello, ${ctx.message.from.first_name}! I'm Dan. I can deploy soYummy on Vercel, just type 'deploy'`
-  )
-);
+const chats = {};
 
-bot.hears("hi", (ctx) => ctx.reply("Hey there"));
-bot.hears("hello", (ctx) =>
-  ctx.reply(`Hello, ${ctx.message.from.first_name}!`)
-);
-bot.hears("about", (ctx) =>
-  ctx.reply(
-    "I'm a small bot and can deploy soYummy on Vercel yet. ) Type 'deploy' and I will do it."
-  )
-);
+const start = () => {
+  bot.on("message", async (msg) => {
+    const text = msg.text;
+    const chatId = msg.chat.id;
+    const firstName = msg.from.first_name;
 
-bot.hears("/deploy", (ctx) => {
-  console.log("1");
-  shell.cd("/home/reen/soyummy");
-  shell.exec("./deploy_soyummy.sh");
-  // shell.exec("/home/reen/soyummy/deploy_soyummy.sh");
-  console.log("2");
-  ctx.reply("Done");
-});
+    if (text === "/start") {
+      await bot.sendMessage(
+        chatId,
+        `Hello, ${firstName}! I'm Dan. I can deploy soYummy on Vercel, just type 'deploy'`
+      );
+      return;
+    }
 
-bot.launch();
+    if (text === "about") {
+      await bot.sendMessage(
+        chatId,
+        "I'm a small bot and can deploy soYummy on Vercel yet. ) Type 'deploy' and I will do it."
+      );
+      return;
+    }
+    if (text === "hi" || text === "Hi") {
+      await bot.sendMessage(chatId, "Hey there");
+      return;
+    }
 
-// Enable graceful stop
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+    if (text === "hello" || text === "Hello") {
+      await bot.sendMessage(chatId, `Hello, ${firstName}!`);
+      return;
+    }
+    if (text === "/deploy" || text === "deploy" || text === "Deploy") {
+      await bot.sendMessage(chatId, "I'm working ... )");
+      shell.cd("/home/reen/soyummy");
+      shell.exec("./deploy_soyummy.sh");
+      await bot.sendMessage(chatId, "Done 👍");
+      return;
+    }
+    await bot.sendMessage(
+      chatId,
+      "I'm sorry, I didn't catch that, can you say it again? "
+    );
+    return;
+  });
+
+  // bot.on("callback_query", (msg) => {
+  //   // console.log(msg);
+
+  //   const data = msg.data;
+  //   const chatId = msg.message.chat.id;
+
+  //   bot.sendMessage(chatId, `You chose ${data} `);
+  //   return;
+  // });
+};
+
+start();
