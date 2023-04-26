@@ -7,7 +7,6 @@ const { DAN_BOT_TOKEN } = process.env;
 
 const bot = new TelegramBot(DAN_BOT_TOKEN, { polling: true });
 
-// **
 bot.setMyCommands([
   { command: "/deploy", description: "deploy soYummy" },
   { command: "/about", description: "about me" },
@@ -25,7 +24,7 @@ const start = () => {
     if (text === "/start") {
       await bot.sendMessage(
         chatId,
-        `Hello, ${firstName}! I'm Dan. I can deploy soYummy on Vercel, just type 'deploy'`
+        `Hello, ${firstName}! \n I'm Dan. \n I can deploy soYummy on Vercel. \n Just type 'deploy'`
       );
       return;
     }
@@ -33,7 +32,7 @@ const start = () => {
     if (text === "about" || text === "/about") {
       await bot.sendMessage(
         chatId,
-        "I'm a small bot and can deploy soYummy on Vercel yet. ) Type 'deploy' and I will do it."
+        "I'm a small bot and can deploy soYummy on Vercel yet. ) \n Type 'deploy' and I will do it."
       );
       return;
     }
