@@ -10,7 +10,7 @@ const bot = new TelegramBot(DAN_BOT_TOKEN, { polling: true });
 // **
 bot.setMyCommands([
   { command: "/deploy", description: "greeting" },
-  // { command: "/about", description: "about me" },
+  { command: "/about", description: "about me" },
   // { command: "/task", description: "task for me" },
 ]);
 
@@ -30,7 +30,7 @@ const start = () => {
       return;
     }
 
-    if (text === "about") {
+    if (text === "about" || text === "/about") {
       await bot.sendMessage(
         chatId,
         "I'm a small bot and can deploy soYummy on Vercel yet. ) Type 'deploy' and I will do it."
