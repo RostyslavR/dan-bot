@@ -9,7 +9,7 @@ const bot = new TelegramBot(DAN_BOT_TOKEN, { polling: true });
 
 // **
 bot.setMyCommands([
-  { command: "/deploy", description: "greeting" },
+  { command: "/deploy", description: "deploy soYummy" },
   { command: "/about", description: "about me" },
   // { command: "/task", description: "task for me" },
 ]);
