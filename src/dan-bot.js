@@ -32,7 +32,8 @@ const start = () => {
     if (text === "about" || text === "/about") {
       await bot.sendMessage(
         chatId,
-        "I'm a small bot and can deploy soYummy on Vercel yet. ) \n Type 'deploy' and I will do it."
+        `I'm a small bot and can deploy soYummy project from github repo on Vercel ) 
+        Type 'deploy' and I will do it.`
       );
       return;
     }
