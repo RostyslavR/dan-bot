@@ -33,6 +33,7 @@ const start = () => {
       await bot.sendMessage(
         chatId,
         `I'm a small bot and can deploy soYummy project from github repo on Vercel ) 
+        https://soyummy-6.vercel.app/
         Type 'deploy' and I will do it.`
       );
       return;
